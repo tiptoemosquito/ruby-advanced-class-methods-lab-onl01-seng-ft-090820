@@ -22,14 +22,14 @@ class Song
     song
   end
 
-  def self.create_by_name
+  def self.create_by_name(song_name)
     song = self.create
     song.name = song_name
     song
   end
 
   def self.find_by_name(song_name)
-    self.all.find{|s| s.name == song_name}
+    self.all.detect{|s| s.name == song_name}
   end
 
   def self.find_or_create_by_name(song_name)
@@ -41,9 +41,9 @@ class Song
   end
 
   def self.new_from_filename(filename)
-    info = filename.split("-")
-    artist_name = info[0]
-    song_name = [1].gsub(".mp3", " ")
+    parts = filename.split(" - ")
+    artist_name = parts[0]
+    song_name = parts[1].gsub(".mp3", "")
 
     song = self.new
     song.name = song_name
@@ -52,9 +52,9 @@ class Song
   end
 
   def self.create_from_filename(filename)
-    info = filename.split("-")
-    artist_name = info[0]
-    song_name = [1].gsub(".mp3", " ")
+    parts = filename.split(" - ")
+    artist_name = parts[0]
+    song_name = parts[1].gsub(".mp3", "")
 
     song = self.create
     song.name = song_name
